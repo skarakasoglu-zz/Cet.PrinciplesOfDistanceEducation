@@ -1,0 +1,68 @@
+@model SigninViewModel
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+    <head>        
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, intial-scale=1" />
+
+        <title></title>       
+        
+        <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+        asp-fallback-href="/cet441demo/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+        asp-fallback-src="/cet441demo/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+        <link rel="stylesheet" href="/cet441demo/css/styles.css" />
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        
+        <script src="/cet441demo/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="/cet441demo/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    </head>
+    <body>
+        <div class="login-wrapper">
+            
+            <div id="login-error" class="alert alert-danger" role="alert" style="@(Context.Request.Query["error"].ToString() != "signin" ? "display:none;" : "")">
+                <strong>Error! </strong>Something went wrong while signing in.
+            </div>
+            <div class="login-form">
+                <section class="login-content">
+                    <h1>Login Form</h1>
+                    <form method="POST" asp-action="signin" asp-controller="account">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" placeholder="Username" asp-for="UserName" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
+                            <input type="password" placeholder="Password" asp-for="Password" />
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-default submit">Sign In</button>
+                        </div>
+                    </form>
+                    <div class="clearfix"></div>
+                    <div class="login-footer">
+                        <p class="change-link">New to site? <a asp-action="signup" asp-controller="account" class="to-register">Create an account</a></p>
+                        <div>
+                            <h1>CET 441</h1>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </body>
+</html>

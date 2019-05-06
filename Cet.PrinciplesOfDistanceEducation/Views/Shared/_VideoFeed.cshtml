@@ -1,0 +1,47 @@
+@model VideoFeedViewModel
+
+@if (Model.Videos != null && Model.Videos.Length > 0)
+{
+    <div id="video-content-container">
+        <div class="subheader">
+            <div id="title-container">
+                <h2 class="list-title">
+                    @Model.Title
+                </h2>
+            </div>
+        </div>
+        <div id="contents">
+            <div class="video-items">
+                @foreach (var video in Model.Videos)
+                {
+                    <div id="@video.Id" class="video-item@(Model.IsFlex == true ? " flex-item-container" : string.Empty)">
+                        <a asp-action="watch" asp-controller="video" asp-route-video="@video.Id" class="video-item-link@(Model.IsFlex == true ? " flex-item" : string.Empty)">
+                            <div class="video-item-thumb">
+                                <img src="@video.ThumbnailUrl" />
+                                <div class="video-duration">
+                                    <span>@video.Duration</span>
+                                </div>
+                            </div>
+                            <div class="video-item-details">
+                                <h3 class="video-item-title">
+                                    @video.Title
+                                </h3>
+                                <div class="video-item-createuser-line">
+                                    <span class="video-item-createuser">@video.CreateUser.FullName</span>
+                                </div>
+                                <div class="video-item-metadata">
+                                    <span>@video.ViewCount views</span>
+                                    @if (!Model.IsFlex)
+                                    {
+                                        <span>@video.CreatedDateString</span>
+                                    }
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+}

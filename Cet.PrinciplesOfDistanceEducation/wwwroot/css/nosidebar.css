@@ -1,0 +1,16 @@
+
+.left-col
+{
+    display: none;
+}
+
+.top-nav
+{
+    margin-left: 0;
+}
+
+.right-col
+{
+    width: 85%;
+    margin:0 auto;
+}

@@ -1,0 +1,178 @@
+@model Bundle<WatchVideoModel>
+
+@using Cet.PrinciplesOfDistanceEducation.Data
+
+@inject ICetUser userService;
+
+@{
+    var user = userService.GetCurrentUser(User);
+    if (user != null)
+    {
+        Model.User = new UserViewModel
+        {
+            UserName = user.UserName,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            AvatarUrl = user.AvatarUrl,
+            Email = user.Email,
+            UserRoles = userService.GetUserRoles(user.UserName).ToList()
+        };
+    }
+}
+
+@if (Model.PageModel.Video != null)
+{
+<link href="https://vjs.zencdn.net/7.1.0/video-js.css" rel="stylesheet">
+<script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
+<div id="alertable" style="margin:0 30px;"></div>
+<div id="columns">
+    <div id="first" class="col-md-8">
+        <div id="first-inner">
+            <div id="player">
+                <div id="player-container-outer">
+                    <div id="player-container-inner">
+                        <div id="player-container" role="complementary">
+                            <div class="html5-player">
+
+                                <video tabindex="-1" id="my-video" class="video-js video html5-main-video" controls preload="auto"
+                                       poster="@Model.PageModel.Video.ThumbnailUrl" data-setup="{}">
+                                    <source  src="@Model.PageModel.Video.VideoUrl" type="video/mp4" />
+                                    <p class="vjs-no-js">
+                                        To view this video please enable JavaScript, and consider upgrading to a web browser that
+                                        <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                                    </p>
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="info">
+                <div id="info-contents">
+                    <div id="container" class="video-info">
+                        <h1 class="title video-info">
+                            <span class="title video-info">@Model.PageModel.Video.Title</span>
+                        </h1>
+                        <div id="info" class="video-info">
+                            <span class="view-count">@Model.PageModel.Video.ViewCount Views</span>
+                        </div>
+                    </div>
+                    @if (Model.User != null && Model.User.IsAuthorized)
+                    {
+                        <div id="container-buttons" class="video-buttons">
+                            <a class="btn btn-danger" data-toggle="modal" data-target="#removeModal">Remove Video</a>
+                            <a asp-action="edit" asp-controller="video" asp-route-video="@Model.PageModel.Video.Id" class="btn btn-primary">Edit Video</a>
+                        </div>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="removeModalLabel">Remove Video</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure that you'd like to remove this video?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-danger" id="remove-video">Remove Video</button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    }
+                </div>
+            </div>
+            <div id="meta">
+                <div id="meta-contents">
+                    <div id="video-secondary-info-renderer" class="video-secondary-info">
+                        <div id="container">
+                            <div id="top-row" class="video-secondary-info">
+                                <div id="video-owner" class="video-secondary-info">
+                                    <a class="video-owner">
+                                        <div id="avatar" class="video-owner">
+                                            <img src="@Model.PageModel.Video.CreateUser.AvatarUrl" class="img-circle" />
+                                        </div>
+                                    </a>
+                                    <div id="upload-info" class="video-owner">
+                                        <div id="owner-container" class="video-owner">
+                                            <div id="owner-name">
+                                                <a href="">@Model.PageModel.Video.CreateUser.FullName</a>
+                                            </div>
+                                        </div>
+                                        <span class="date video-secondary-info">Published on @Model.PageModel.Video.CreatedDate.ToString("MMM dd, yyyy")</span>
+                                    </div>
+                                </div>                
+                            </div>
+                            <div class="video-secondary-info video-detail-info">
+                                    <div>
+                                        <span><strong>Group Name:</strong> @Model.PageModel.Video.GroupName</span>
+                                    </div>
+                                    <div>
+                                       @Html.Raw(@Model.PageModel.Video.Description)
+                                    </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="second" class="col-md-4">
+        @{
+            var feedModel = new VideoFeedViewModel();
+            feedModel.Videos = Model.PageModel.VideosFromTheSameYear;
+            feedModel.Title = "Recommended Videos";
+            feedModel.IsFlex = true;
+        }
+        <partial name="~/Views/Shared/_VideoFeed.cshtml" model="feedModel" />
+    </div>
+</div>
+
+<script src="https://vjs.zencdn.net/7.1.0/video.js"></script>
+
+@if (Model.User != null && Model.User.IsAuthorized)
+{
+    <script>
+        $('#remove-video').on('click', function() {
+            $.ajax({
+                url: '/cet441demo/video/remove?video=@Model.PageModel.Video.Id',
+                type: 'DELETE'
+            })
+            .done(function() {
+                $('#columns').html('');
+                $('#alertable').html(`
+                                    <div id="remove-success" style="display:none;" class="alert alert-success">
+                                        <strong>Successful!</strong> Video is removed successfully. <a href="/cet441demo/" class="alert-link">Go to homepage.</a>
+                                        </div>`);
+                $('#remove-success').slideDown();
+            })
+            .fail(function() {
+                $('#alertable').html(`
+                                <div id="remove-error" style="display:none;" class="alert alert-danger">
+                                    <strong>Error!</strong> Something went wrong while removing the video.
+                                    </div>`);
+                $('#remove-error').slideDown();
+            })
+            .always(function() {
+                $('.modal-backdrop').remove();
+                $('body').css('');
+            });
+
+        });
+    </script>
+}
+
+}
+else 
+{
+    <div class="alert alert-warning" style="margin: 0 30px;">    
+        No such video. <a asp-action="index" asp-controller="home" class="alert-link">Go to homepage.</a>
+    </div>
+}

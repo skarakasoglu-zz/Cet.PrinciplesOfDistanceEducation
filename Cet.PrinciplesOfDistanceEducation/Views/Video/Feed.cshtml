@@ -1,0 +1,17 @@
+@model Bundle<IndexViewModel>
+
+
+@if (Model.PageModel.Videos != null && Model.PageModel.Videos.Length > 0)
+{
+    var feedModel = new VideoFeedViewModel();
+    feedModel.Videos = Model.PageModel.Videos;
+    feedModel.Title = ViewData["Title"].ToString();
+
+    <partial name="~/Views/Shared/_VideoFeed.cshtml" model="feedModel" />
+}
+else
+{
+    <div class="alert alert-warning" style="margin:0 30px;">
+        <strong>Warning!</strong> We couldn't find any videos from this year. <a asp-action="index" asp-controller="home" class="alert-link">Go home page. </a>
+    </div>
+}

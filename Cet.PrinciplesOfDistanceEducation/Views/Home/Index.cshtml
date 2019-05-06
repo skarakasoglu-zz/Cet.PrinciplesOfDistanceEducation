@@ -1,0 +1,9 @@
+@model Bundle<IndexViewModel>
+
+@{
+    var feedModel = new VideoFeedViewModel();
+    feedModel.Videos = Model.PageModel.Videos;
+    feedModel.Title = "Recently Added";
+}
+
+<partial name="~/Views/Shared/_VideoFeed.cshtml" model="feedModel" />

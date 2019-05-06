@@ -1,0 +1,57 @@
+@model Bundle<CreditsViewModel>
+
+@using Cet.PrinciplesOfDistanceEducation.Data
+
+@inject ICetUser userService;
+
+@{
+    var user = userService.GetCurrentUser(User);
+    if (user != null)
+    {
+        Model.User = new UserViewModel
+        {
+            UserName = user.UserName,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            AvatarUrl = user.AvatarUrl,
+            Email = user.Email,
+            UserRoles = userService.GetUserRoles(user.UserName).ToList()
+        };
+    }
+}
+
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+
+<div class="page-container" style="margin:0 25px;">
+    <div class="page-content" style="margin-bottom: 25px;">
+         @Html.Raw(Model.PageModel.Content)
+    </div>
+    @if (Model.User != null && Model.User.IsAuthorized)
+    {
+         <div class="content-editor-button">
+             <button type="button" id="show-editform" class="btn btn-primary">Edit</button>
+            <div class="content-editor" style="display:none;">
+                <form asp-action="EditCredits" asp-controller="Home" method="POST">
+                    <div class="form-row">
+                         <textarea id="summernote" asp-for="@Model.PageModel.Content"></textarea>
+                     </div>
+                     <input type="submit" value="Submit" class="btn btn-primary btn-success" />
+                 </form>
+            </div>
+        </div>
+
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#summernote').summernote();
+            });
+
+            $('#show-editform').on('click', function() {
+                $('.content-editor').slideDown();
+                $('.page-content').slideUp();
+                $('#show-editform').slideUp();
+            });
+        </script>
+    }
+</div>

@@ -1,0 +1,291 @@
+@model Bundle<UploadViewModel>
+
+
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+<link rel="stylesheet" href="/cet441demo/css/nosidebar.css" />
+
+<div class="upload-page-container">
+    <div id="upload-success" class="alert alert-success" style="display:none;">
+        <strong>Well done!</strong> You successfully uploaded and published the video. The video is being processed right now. It may take a while. <a href="/cet441demo" class="alert-link">Go home page.</a>
+    </div>
+    <div id="upload-error" class="alert alert-danger" style="display:none;">
+        <strong>Error!</strong> Something went wrong while publishing the video.
+    </div>
+    <div id="upload-warning" class="alert alert-warning" style="display:none;">
+        <strong>Warning!</strong> To be able to publish the video, you need to fill al required fields.
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="upload-panel" class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Upload</h4>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body" id="upload-div">
+                    <form asp-action="Upload" asp-controller="Upload" asp-route-id="@Model.PageModel.Id" data-ajax-method="post" data-ajax="true" enctype="multipart/form-data" id="upload-form">
+                        <div class="upload-div">
+                            <label for="file-input">
+                                <i class="glyphicon glyphicon-open-file"></i>
+                                <h3>Select a video to upload</h3>
+                                <p>Or drag and drop a video file.</p>
+                            </label>
+                            <input id="file-input" type="file" name="file" style="display:none;" />
+                        </div>
+                        <input id="file-submit" type="submit" value="Submit" class="btn btn-default" />
+                    </form>
+                </div>
+                <div class="panel-body" id="upload-details">
+                    <form asp-action="UploadDetails" asp-controller="Upload" data-ajax-method="post" data-ajax="true" enctype="multipart/form-data" id="detail-form">
+                        <div class="upload-left-col col-md-3">
+                            <div class="video-wrapper media">
+                                <video class="media-object" id="video" controls controlsList="nodownload"></video>
+                            </div>
+                        </div>
+                        <div class="upload-right-col col-md-9">
+                            <div class="form-row" id="progress-div">
+                                <div class="form-group col-md-10" style="margin-top:8px;">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                            0% Complete
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="submit" disabled="disabled" class="btn btn-info" id="detail-submit" value="Publish" />
+                                </div>
+                            </div>
+                            <div class="right-col-content col-md-10">
+                                <div class="row" style="margin-left:3px; margin-bottom:15px;">
+                                    <h5><span class="label label-default">Video Info</span></h5>
+                                </div>
+                                <div class="form-row mb-3">
+                                    <input type="text" class="form-control" asp-for="@Model.PageModel.VideoTitle" id="video-title" placeholder="Video Title" required />
+                                </div>
+                                <div class="form-row mb-3">
+                                    <input type="text" class="form-control" asp-for="@Model.PageModel.GroupName" placeholder="Group Name" required />
+                                </div>
+                                <div class="form-row mb-3">
+                                    <input type="text" class="form-control" asp-for="@Model.PageModel.Year" placeholder="Year" required />
+                                </div>
+                                <div class="form-row mb-3">
+                                    <textarea id="summernote" asp-for="@Model.PageModel.Description"></textarea>
+                                </div>
+                                <input type="hidden" id="video-duration" asp-for="@Model.PageModel.Duration" />
+                                <input type="hidden" asp-for="@Model.PageModel.Id" />
+                                <div class="row" style="margin-left:3px;margin-bottom:15px;">
+                                    <h5><span class="label label-default">Video Thumbnails</span></h5>
+                                </div>
+                                <div class="row" id="thumbnails">
+                                    <input type="hidden" id="thumb-hidden" name="selectedThumbnailId" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/cet441demo/js/jquery.form.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote();
+    });
+    (function () {
+        var uploadForm = $('#upload-form');
+        var upload = $('#upload-div');
+        var details = $('#upload-details');
+        var bar = $('.progress-bar');
+        var percent = $('.progress-bar');
+
+
+        $('#file-input').on('change', function () {
+            uploadForm.submit();
+        });
+
+        $('#upload-form').ajaxForm({
+            beforeSend: function () {
+                upload.remove();
+                details.css('display', 'block');
+                var percentValue = "0%";
+                bar.width(percentValue);
+                percent.html(percentValue + ' Complete');
+            },
+            uploadProgress: function (event, position, total, percentComplete) {
+                var percentValue = percentComplete + "%";
+                bar.width(percentValue);
+                percent.html(percentValue + ' Complete');
+            },
+            error: function (e) {
+                $('html').html(e.responseText);
+            },
+            success: function (d) {
+                var percentValue = "100%";
+                bar.width(percentValue);
+                percent.html('DONE UPLOADING');
+            },
+            complete: function (xhr) {
+                $('video').attr('src', '/cet441demo/videos/temp/@Model.PageModel.Id' + '.mp4');
+                $('.video-wrapper').css('display', 'block');
+                $('#progress-div').css('height', $('.upload-left-col').height() / 2);
+                $('.progress-bar').removeClass('active');
+
+                
+                var model = jQuery.parseJSON(xhr.responseText);
+
+                $('#video-duration').attr('value', model.pageModel.duration);
+                $('#video-title').attr('value', model.pageModel.videoTitle);
+
+                var thumbnailDiv = $('#thumbnails');
+
+                jQuery.each(model.pageModel.thumbnailOptions, function (i, val) {
+
+                    thumbnailDiv.html(thumbnailDiv.html() + `
+                                <div class="col-xs-6 col-md-3">
+                                    <a class="thumbnail" id="` + val.id + `">
+                                        <img class="thumbnail-image" src="` + val.thumbnailUrl + `" alt="" />
+                                        <div class="thumbnail-hover"><span class="text">Set as Thumbnail</span></div>
+                                    </a>
+                                </div>
+                                    `);
+
+                });
+
+                var thumbOverlayText = $('.thumbnail-hover .text');
+                var thumbImage = $('.thumbnail-image');
+                thumbOverlayText.css('left', (thumbImage.width() - thumbOverlayText.width()) / 2);
+
+
+                thumbnailDiv.html(thumbnailDiv.html() + `<div id="custom-file-container" class="col-xs-6 col-md-3" style="padding-bottom:15px;border-left:#ccc solid 1px;">
+                                                        <input id="custom-file-button" type="button" class="btn btn-default btn-sm" value="Custom Thumbnail" onclick="document.getElementById('custom-file').click();">
+
+                                                        <input type="file" id="custom-file" style="display:none;" />
+                                                    </div>`);
+
+                $('a.thumbnail:not(#custom-thumb)').click(function () {
+                    $('a.thumbnail').removeClass('thumbnail-selected');
+                    $(this).addClass('thumbnail-selected');
+
+                    $('#thumb-hidden').attr('value', $(this).attr('id'));
+                });
+
+                var customImageInput = $('#custom-file');
+                var customThumbDiv = $('#custom-file-container');
+                customImageInput.on('change', function () {
+                    var file = event.target.files[0];
+                    var data = new FormData();
+
+                    if (file != null) {
+                        data.append('file', file);
+                        data.append('id', '@Model.PageModel.Id');
+                    }
+
+                    $.ajax({
+                        type: 'POST',
+                        processData: false,
+                        contentType: false,
+                        data: data,
+                        url: '@Url.Action("UploadCustomThumbnail", "Upload")',
+                        dataType: 'json'
+                    })
+                        .fail(function (response) {
+                            $('html').html(response.responseText);
+                        })
+                        .done(function (msg) {
+                        })
+                        .always(function (complete) {
+                            customThumbDiv.removeAttr('style');
+                            customThumbDiv.html(`
+                                    <a class="thumbnail" id="custom-thumb">
+                                        <img class="thumbnail-image" src="/videos/@Model.PageModel.Id/customthumb.png" alt="" />
+                                        <div class="thumbnail-hover">
+                                            <span id="change-custom-thumb" class="text">Change Image</span>
+                                            <span class="text" style="left:` + thumbOverlayText.css('left') + `;top:65%;">Set as Thumbnail</span>
+                                        </div>
+                                        <input type="file" id="change-file" style="display:none;" />
+                                    </a>
+                                            `);
+
+
+                            var changeThumbSpan = $('#change-custom-thumb');
+                            $('#change-custom-thumb').css('left', ($('.thumbnail-image').width() - changeThumbSpan.width()) / 2);
+
+                            $('a#custom-thumb .thumbnail-hover .text').on('click', function () {
+                                $('a.thumbnail').removeClass('thumbnail-selected');
+                                $('a#custom-thumb').addClass('thumbnail-selected');
+
+                                $('#thumb-hidden').attr('value', 'custom');
+                            });
+
+                            $('#change-custom-thumb').on('click', function () {
+                                $('#change-file').click();
+                            });
+
+                            $('#change-file').on('change', function () {
+                                 var file = event.target.files[0];
+                                 var data = new FormData();
+
+                                if (file != null) {
+                                    data.append('file', file);
+                                    data.append('id', '@Model.PageModel.Id');
+                                }
+
+                                $.ajax({
+                                    type: 'POST',
+                                    processData: false,
+                                    contentType: false,
+                                    data: data,
+                                    url: '@Url.Action("UploadCustomThumbnail", "Upload")',
+                                    dataType: 'json'
+                                })
+                                    .fail(function (response) {
+                                        $('html').html(response.responseText);
+                                    })
+                                    .done(function (msg) {
+                                    })
+                                    .always(function (complete) {
+                                        $('a#custom-thumb img').attr('src', '/videos/@Model.PageModel.Id/customthumb.png?' + (new Date()).getTime());
+                                    });
+                            });
+                        });
+
+                });
+
+                $('#detail-submit').removeAttr('disabled');
+            }
+        });
+
+        $('#detail-form').ajaxForm({
+            beforeSend: function () {
+
+            },
+            error: function (response) {
+                $('#upload-error').slideDown();
+                $('#upload-warning').slideUp();
+                $('html').html(response.responseText);
+            },
+            succes: function (d) {
+            },
+            complete: function (xhr) {
+                var returnObject = jQuery.parseJSON(xhr.responseText);
+
+                if (returnObject.thumbnailMissing == true) {
+                    $('#upload-error').slideUp();
+                    $('#upload-warning').slideDown();                    
+                }
+                else {
+                    $('#upload-panel').slideUp();
+                    $('#upload-panel').html('');
+                    $('#upload-success').slideDown();
+                    $('#upload-warning').slideUp();
+                    $('#upload-error').slideUp();
+                }
+            }
+        });
+
+
+    })();
+</script>

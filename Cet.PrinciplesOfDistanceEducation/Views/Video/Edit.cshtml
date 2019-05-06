@@ -1,0 +1,91 @@
+@model Bundle<EditViewModel>
+
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+<link rel="stylesheet" href="/cet441demo/css/nosidebar.css" />
+
+<div class="edit-video-container">
+    <div id="edit-success" class="alert alert-success" style="display:none;">
+        <strong>Well Done!</strong> You successfully edited the video. <a href="/cet441demo/watch?video=@Model.PageModel.CurrentVideo.Id" class="alert-link">Go to video.</a>
+    </div>
+    <div id="edit-error" class="alert alert-error" style="display:none;">
+        <strong>Error!</strong> Something went wrong while editing the video.
+    </div>
+    <div id="edit-warning" class="alert alert-warning" style="display:none;">
+        <strong>Warning!</strong> You need to fill all required fields.
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Edit Video</h4>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body" id="edit-video-section">
+                    <form asp-action="EditSave" asp-controller="Video" data-ajax-method="POST" data-ajax="true" id="edit-form" >
+                        <div class="right-col-content col-md-10 edit-video-content">
+                            <div class="row" style="margin-left:3px; margin-bottom:15px;">
+                                <h5><span class="label label-default">Video Info</span></h5>
+                            </div>
+                            <div class="form-row mb-3">
+                                <input type="text" class="form-control" asp-for="@Model.PageModel.CurrentVideo.Title" id="video-title" placeholder="Video Title" required />
+                            </div>
+                            <div class="form-row mb-3">
+                                <input type="text" class="form-control" asp-for="@Model.PageModel.CurrentVideo.GroupName" placeholder="Group Name" required />
+                            </div>
+                            <div class="form-row mb-3">
+                                <input type="text" class="form-control" asp-for="@Model.PageModel.CurrentVideo.Year" placeholder="Year" required />
+                            </div>
+                            <div class="form-row mb-3">
+                                <textarea id="summernote" asp-for="@Model.PageModel.CurrentVideo.Description"></textarea>
+                            </div>
+                            <input type="hidden" asp-for="@Model.PageModel.CurrentVideo.Id" />
+                            <input type="hidden" asp-for="@Model.PageModel.CurrentVideo.StateName" />
+                            <div class="row" style="margin-left:3px;margin-bottom:15px;">
+                                <h5><span class="label label-default">Video Thumbnails</span></h5>
+                            </div>
+                            <div class="row" id="thumbnails">
+                                <input type="hidden" id="thumb-hidden" name="selectedThumbnailId" />
+                            </div>
+                            <input type="submit" class="btn btn-primary" value="Submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/cet441demo/js/jquery.form.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote();
+    });
+
+    (function() {
+        $('#edit-form').ajaxForm({
+                error: function(e) {
+                    $('#edit-error').slideDown();
+                },
+                success: function(d) {
+                },
+                complete: function(xhr) {
+                    var returnObject = jQuery.parseJSON(xhr.responseText);
+                    
+                    if (returnObject.warning == true) {
+                        $('#edit-error').slideUp();
+                        $('#edit-warning').slideDown();
+                    }
+                    else
+                    {                        
+                        $('#edit-warning').slideUp();
+                        $('#edit-error').slideUp();
+                        $('#edit-success').slideDown();
+                    }
+                }
+        });
+    })();
+</script>

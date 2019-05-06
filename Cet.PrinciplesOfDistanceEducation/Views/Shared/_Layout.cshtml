@@ -1,0 +1,152 @@
+@model Bundle
+
+@using Cet.PrinciplesOfDistanceEducation.Data
+
+@inject ICetUser userService;
+@inject IVideo videoService;
+
+@{
+    var user = userService.GetCurrentUser(User);
+    if (user != null)
+    {
+        Model.User = new UserViewModel
+        {
+            UserName = user.UserName,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            AvatarUrl = user.AvatarUrl,
+            Email = user.Email,
+            UserRoles = userService.GetUserRoles(user.UserName).ToList()
+        };
+    }
+    Model.VideoYears = videoService.GetYearsContainingVideo().ToArray();
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>@ViewData["Title"] - CET 441</title>
+        
+        <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+        asp-fallback-href="/cet441demo/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+        asp-fallback-src="/cet441demo/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+        <link rel="stylesheet" href="/cet441demo/css/styles.css" />
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    </head>
+    <body>
+        <div class="body">
+            <div class="col-md-3 left-col">
+                <div class="nav-title">
+                    <a asp-action="Index" asp-controller="Home" class="site-title"><span>CET 441</span></a>
+                </div> 
+                <div class="profile">
+                    <div class="profile-pic">
+                        <img
+                        src="@((Model.User == null || string.IsNullOrWhiteSpace(Model.User.AvatarUrl) ? "/cet441demo/images/avatars/no-avatar.png" : Model.User.AvatarUrl ))" 
+                        class="img-circle profile-img" />
+                    </div>
+                    <div class="profile-info">
+                        @{
+                            var fullName = Model.User != null ? Model.User.FullName : "Guest";
+                        }
+                        <span>Welcome</span>
+                        <h2>@fullName</h2>
+                    </div>
+                </div>
+                <div id="sidebar-menu" class="main-menu-side main-menu">
+                    <div class="menu-section">
+                        <ul class="nav-menu side-menu">
+                            <li>
+                                <a asp-action="index" asp-controller="home"><i class="fa fa-home"></i>Home</a>
+                            </li>
+                            <li>
+                                <a asp-action="about" asp-controller="home"><i class="fa fa-question-circle"></i>About this site</a>
+                            </li>
+                            <li>
+                                <a asp-action="feedindex" asp-controller="video"><i class="fa fa-video"></i>All Demos</a>
+                            </li>
+                            <li>
+                                <a asp-action="credits" asp-controller="home"><i class="fa fa-copyright"></i>Credits</a>
+                            </li>
+                            @{
+                                if (Model.VideoYears != null && Model.VideoYears.Length > 0)
+                                {
+                                    <li>
+                                        <a><i class="fa fa-calendar-alt"></i>Years</a>
+                                        <ul class="nav-menu child-menu">
+                                            @foreach(int year in Model.VideoYears)
+                                            {
+                                                <li><a asp-action="feed" asp-controller="video" asp-route-year="@year">@year</a></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="top-nav">
+                <div class="navbar-menu">
+                    <ul class="navbar-nav navbar-right">
+                        @if (Model.User != null)
+                        {
+                            <li>
+                                <a href="" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img
+                                        src="@((Model.User == null || string.IsNullOrWhiteSpace(Model.User.AvatarUrl) ? 
+                                        "/images/avatars/no-avatar.png" : Model.User.AvatarUrl ))" alt="" /> 
+                                        <span>@Model.User.FullName</span>
+                                    <i class="fa fa-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdownusermenu pull-right">
+                                    <li>
+                                        <a asp-action="index" asp-controller="home">Home</a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="about" asp-controller="home">What is this?</a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="Signout" asp-controller="Account">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            @if (Model.User.IsAuthorized)
+                            {   
+                                <li>
+                                    <a role="button" class="upload-btn" style="font-weight: 500;font-size:1.8em;" asp-action="index" asp-controller="upload">
+                                        <i class="fa fa-upload"></i>
+                                    </a>
+                                </li>
+                            }
+                        }
+                        else 
+                        {
+                            <li>
+                                <a role="button" class="btn btn-default" asp-action="signin" asp-controller="account">Sign In</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="right-col">
+                @RenderBody()
+            </div>
+        </div>
+    </body>
+</html>

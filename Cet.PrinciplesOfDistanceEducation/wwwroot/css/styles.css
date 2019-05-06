@@ -1,0 +1,945 @@
+/* General Component CSS */
+
+body {
+    background: #F7F7F7;
+    color: #73879C;
+    font-family: "Roboto",'Open Sans', 'Lato',sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.471;
+}
+
+a:hover, a:visited, a:focus {
+    text-decoration: none;
+}
+
+/* General Component CSS ENDS */
+
+/* Layout CSS */
+
+.col-md-3.left-col {
+    min-height: 100%;
+    width: 230px;
+    padding: 0;
+    direction: ltr;
+    overflow-y: auto;
+    max-height: 100%;
+    margin: auto;
+    position: fixed;
+    z-index: 1;
+    background: #2A3F54;
+}
+
+.nav-title {
+    width:230px;
+    float:left; 
+    background: #2A3F54;
+    border-radius:0;
+    height:57px;
+    min-height: 50px;
+    position: relative;
+    margin-bottom: 0;
+}
+
+.site-title {
+    font-weight: 400;
+    font-size: 22px;
+    width: 100%;
+    line-height: 59px;
+    display:block;
+    height: 55px;
+    margin: 0;
+    padding-left: 10px;
+    color: #ECF0F1 !important;
+    margin-left: 0 !important;
+}
+
+.profile-pic {
+    width: 35%;
+    float:left;
+}
+
+.img-circle.profile-img {
+    width: 70%;
+    background: #fff;
+    margin-left: 15%;
+    z-index: 10000;
+    position: inherit;
+    margin-top: 20px;
+    border: 1px solid rgba(52,73,94,.44);
+    padding: 4px;
+}
+
+.profile-info {
+    padding: 25px 10px 10px;
+    width: 65%;
+    float: left;
+}
+
+.profile-info span {
+    font-size: 13px;
+    line-height: 30px;
+    color: #BAB8B8;
+}
+
+.profile-info h2 {
+    font-size: 14px;
+    color: #ECF0F1;
+    margin: 0;
+    font-weight: 300;
+}
+
+#sidebar-menu {
+    margin-top: 150px;
+}
+
+.main-menu-side {
+    padding: 0;
+}
+
+.nav-menu {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.nav-menu > li {
+    position: relative;
+    display: block;
+}
+
+.menu-section {
+    margin-bottom: 35px;
+}
+
+.menu-section > ul {
+    margin-top: 10px;
+}
+
+.nav-menu.side-menu > li {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+.nav-menu.side-menu > li > a {
+    color: #E7E7E7;
+    font-weight: 500;
+    margin-bottom: 6px;
+    padding: 13px 15px 12px;
+    position: relative;
+    display: block;
+}
+
+.main-menu .fa {
+    width: 26px;
+    opacity: .99;
+    display: inline-block;
+    font-family: "Font Awesome 5 Free";
+    font-style: normal;
+    font-size: 18px;
+}
+
+.nav-menu > li > a {
+    position: relative;
+    display: block;
+}
+
+.nav-menu.child-menu li {
+    padding-left: 36px;
+}
+
+.nav-menu.child-menu li::before {
+    background: #425668;
+    bottom: auto;
+    content: "";
+    height: 8px;
+    left: 23px;
+    margin-top: 15px;
+    position: absolute;
+    right: auto;
+    width: 8px;
+    z-index: 1;
+    border-radius: 50%;
+}
+
+.nav-menu.child-menu li::after {
+    border-left: 1px solid #425668;
+    bottom: 0;
+    content: "";
+    left: 27px;
+    position: absolute;
+    top: 0;
+}
+
+.nav-menu.child-menu > li > a {
+    color: rgba(255, 255, 255, .75);
+    font-size: 12px;
+    padding: 9px;
+    font-weight: 500;
+}
+
+.nav-menu.child-menu > li:hover {
+    background-color: rgba(66, 86, 104, .60);
+}
+
+.top-nav {
+    display:block;
+    margin-left:230px;
+}
+
+@media (min-width: 480px) {
+    .navbar-menu {
+        position: static;
+    }
+}
+
+.navbar-menu {
+    float:left;
+    background: #EDEDED;
+    border-bottom: 1px solid #D9DEE4;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.navbar-nav > li > a {
+    font-weight: 500;
+    line-height: 32px;
+}
+
+.top-nav .navbar-right {
+    margin: 0;
+    width: 70%;
+}
+
+@media (min-width: 768px) {
+    .navbar-right {
+        float: right !important;
+    }
+}
+
+@media (min-width: 480px) {
+
+    .top-nav .navbar-right li {
+        position: relative;
+    }
+}
+
+.top-nav .navbar-right li {
+    display: inline-block;
+    float: right;
+}
+
+.top-nav .navbar-right > li > a {
+    padding: 5px 20px;
+    margin: 10px 5px;
+}
+
+.top-nav .navbar-right:last-child {
+    margin-right: 15px;
+}
+
+.user-profile img
+{
+    width: 29px;
+    height: 29px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.navbar-nav > li > a 
+{
+    color: #515356 !important;
+    padding: 13px 15px 12px;
+    display: block;
+    position: relative;
+}
+
+.navbar-nav .open .dropdown-menu
+{
+    position: absolute;
+    background: #fff;
+    margin-top: 0;
+    border:1px solid #D9DEE4;
+    right: 0;
+    left: auto;
+    width:220px;
+}
+
+.top-nav .dropdown-menu li 
+{
+    width: 100%;
+}
+
+.top-nav .dropdown-menu li a 
+{
+    width: 100%;
+    padding: 12px 20px;
+}
+
+.dropdown-menu > li > a 
+{
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #5A738E;
+    white-space: nowrap;
+}
+
+.right-col {
+    margin-left: 230px;
+    padding-top: 100px;
+}
+
+/* Layout CSS Ends */
+
+/* Login and Register Form CSS */
+
+.login-wrapper, .register-wrapper {
+    right: 0;
+    margin: 5% auto 0;
+    max-width: 350px;
+    position: relative;
+}
+
+.login-form, .registration-form {
+    position: absolute;
+    top: 100px;
+    width: 100%;
+}
+
+.login-content, .register-content {
+    margin: 0 auto;
+    padding: 25px 0 0;
+    position: relative;
+    text-align: center;
+    text-shadow: 0 1px 0 #fff;
+    min-width: 280px;
+}
+
+.login-content h1, .register-content h1 {
+    font-size: 25px;
+    font-weight: 400;
+    letter-spacing: -.05em;
+    line-height: 20px;
+    margin: 10px 0 30px;
+}
+
+.login-content form, .register-content form {
+    margin: 20px 0;
+    position: relative;
+}
+
+.login-content form input, .register-content form input {
+    transition: all ease 1s;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+
+.login-content form input[type="text"], .login-content form input[type="email"], .login-content form input[type="password"],
+.register-content form input[type="text"], .register-content form input[type="email"], .register-content form input[type="password"]
+{
+    border-radius: 3px;
+    -ms-box-shadow: 0 1px 0 #fff, 0 -2px 5px rgba(0,0,0,.08) inset;
+    box-shadow: 0 1px 0 #fff, 0 -2px 5px rgba(0,0,0, .08) inset;
+    border: 1px solid #c8c8c8;
+    color: #777;
+    margin:0;
+    width: 100%;    
+    min-height: 35px;
+    padding-left: 10px;
+}
+
+.login-footer  > div {
+    margin-top: 40px;
+    height: 150px;;
+}
+
+#signup-form div {
+    width: 100%;
+}
+
+input.input-validation-error 
+{
+    background: #FEF1EC;
+    border: 1px solid red !important;
+}
+
+.valid {
+    background:#cbffc2;
+    border: 1px solid green !important;
+}
+
+span.error {
+    color: red;
+}
+/* Login and Register Form CSS ENDS */
+
+/* Upload Page CSS */
+
+.upload-div {
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+a.thumbnail {
+    cursor: pointer;
+    position: relative;
+    height: 190px;
+}
+
+a.thumbnail:hover{
+    border:none;
+}
+
+.thumbnail:hover .thumbnail-image {
+    opacity: 1;
+}
+
+.thumbnail .thumbnail-image {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.thumbnail .thumbnail-hover {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(50,50,50,0.50);
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.thumbnail .thumbnail-hover .text {
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top: 45%;
+}
+
+a#custom-thumb:not(.thumbnail-selected) .thumbnail-hover .text#change-custom-thumb {
+    top: 30%;
+}
+
+a#custom-thumb.thumbnail-selected .thumbnail-hover .text#change-custom-thumb {
+    top: 45%;
+}
+
+.thumbnail:not(.thumbnail-selected):hover .thumbnail-hover, a#custom-thumb:hover .thumbnail-hover {
+    opacity: 1;
+}
+
+a#custom-thumb .thumbnail-hover .text {
+    display: inline;
+}
+
+a#custom-thumb.thumbnail-selected .thumbnail-hover .text:not(#change-custom-thumb) {
+    display: none;
+}
+
+a#custom-thumb.thumbnail-selected:hover .thumbnail-hover .text:not(#change-custom-thumb) {
+    opacity: 0;
+}
+
+.thumbnail.thumbnail-selected {
+    border: 2px solid red !important;
+}
+
+.upload-div i.glyphicon {
+    font-size: 12em;
+}
+
+.upload-div > input {
+    display: none;
+}
+
+.upload-div > label {
+    cursor: pointer;
+    width: 70%;
+}
+
+.upload-div label img {
+    width: 60%;
+}
+
+#file-submit {
+    display: none;
+}
+
+#upload-details {
+    display: none;
+}
+
+    #upload-details .mb-3 {
+        margin-bottom: 10px;
+    }
+
+#custom-thumb.thumbnail .thumbnail-hover .text:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+textarea {
+    resize: none;
+}
+
+.video-wrapper {
+    display: none;
+    width: 100%;
+    margin: 0 auto;
+    padding: 5px;
+}
+
+.video-wrapper > video {
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.video-overlay-play-button {
+    box-sizing: border-box;
+    width: 100%;
+    height: 360px;
+    padding: 10px calc(50% - 50px);
+    position: absolute;
+    top: 0;
+    display: block;
+    opacity: 0.95;
+    cursor: pointer;
+    background-image: linear-gradient(transparent, #000);
+    transition: opacity 150ms;
+}
+
+.video-overlay-play-button:hover {
+    opacity: 1;
+}
+
+.video-overlay-play-button.is-hidden {
+    display: none;
+}
+
+/* Upload Page CSS ENDS */
+
+/* Video Feed Page CSS */
+
+#video-content-container, #more-content {
+width: 90%;
+margin: 0 auto;
+}
+
+.subheader {
+margin-top: 24px;
+}
+
+#title-container {
+color: hsl(0, 0%, 6.7%);
+height: 2rem;
+display: flex;
+-ms-flex-direction: row;
+-webkit-flex-direction: row;
+flex-direction: row;
+-ms-flex-align: center;
+-webkit-flex-align: center;
+align-items: center;
+}
+
+#title-container h2 {
+    display: flex;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-align: center;
+    -webkit-flex-align: center;
+    align-items: center;
+    max-height: 2rem;
+    overflow: hidden;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 2rem;
+}
+
+    #title-container h2 span {
+        color: hsl(0, 0%, 6.7%);
+        display: block;
+        max-height: 2rem;
+        overflow: hidden;
+        font-size: 1.6rem;
+        font-weight: 500;
+        line-height: 2rem;
+    }
+
+#contents {
+margin-top: 24px;
+}
+
+.video-items {
+display: flex;
+-ms-flex-direction: row;
+-webkit-flex-direction: row;
+flex-direction: row;
+-ms-flex-wrap: wrap;
+-webkit-flex-wrap: wrap;
+flex-wrap: wrap;
+}
+
+.video-item {
+margin-right: 4px;
+display: inline-block;
+width: 210px;
+height: 202px;
+margin-bottom: 24px;
+}
+
+.flex-item-container {
+width: 300px;
+height: 100px;
+}
+
+.flex-item {
+display:flex;
+}
+
+.flex-item .video-item-thumb {
+width: 60% !important;
+}
+
+.flex-item .video-item-details {
+margin-left:5px;
+}
+
+.video-item .video-item-thumb {
+    width: 100%;
+    height: 118px;
+    position: relative;
+    flex: none;
+}
+
+    .video-item .video-item-thumb img {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+.video-item .video-duration {
+    color: hsl(0, 0%, 100%);
+    background-color: hsl(0, 0%, 6.7%);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 2px 4px;
+    margin: 4px;
+    opacity: .8;
+    border-radius: 2px;
+    letter-spacing: .5px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.2rem;
+    align-items: center;
+    display: inline-flex;
+}
+
+.video-item .video-item-details h3 {
+    color: rgb(17, 17, 17);
+    margin: 8px 0 8px;
+    display: -webkit-box;
+    max-height: 3.2rem;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    -webkit-line-clamp: 2;
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.6rem;
+}
+
+.video-item-createuser-line {
+max-width: 100%;
+max-height: 1.8rem;
+overflow: hidden;
+font-size: 1.3rem;
+font-weight: 400;
+line-height: 1.8rem;
+text-transform: none;
+-ms-flex-wrap: wrap;
+-webkit-flex-wrap: wrap;
+flex-wrap: wrap;
+display: flex;
+-ms-flex-direction: row;
+-webkit-flex-direction: row;
+flex-direction: row;
+-ms-flex-align: center;
+-webkit-flex-align: center;
+align-items: center;
+}
+
+.video-item-createuser-line span {
+    color: rgba(17, 17, 17, 0.6);
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: flex;
+    margin-left: 0;
+}
+
+.video-item-metadata span:first-of-type::after {
+content: '•';
+margin: 0 auto;
+}
+
+/* Video Feed CSS ENDS */
+
+
+/* Watch Page CSS */
+
+@media screen and (max-width: 750px) {
+    #columns, #video-content-container 
+    {
+        min-width:500px;
+        overflow-x: scroll;
+        margin-left: 20px;
+    }
+
+    .top-nav {
+        min-width: 100%;
+    }
+}
+
+.nav-md .container.body .main_container .left_col {
+    display: none !important;
+}
+
+.main_container .top_nav {
+    margin-left: 0;
+}
+
+.nav-md .container.body .main_container .right_col {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.nav.toggle {
+    display: none;
+}
+
+#first {
+    padding-right: 24px;
+    padding-top: 24px;
+}
+
+#player {
+    position: relative;
+}
+
+#player-container-outer {
+    max-width: 1292px;
+    min-height: 360px;
+    margin: 0 auto;
+}
+
+#player-container-inner {
+    position: relative;
+    padding-top: 56%;
+}
+
+#player-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    min-height: 360px;
+}
+
+.html5-player {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+    color: #eee;
+    text-align: left;
+    direction: 1tr;
+    font-size: 11px;
+    line-height: 1.3;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    touch-action: manipulation;
+    -ms-high-contrast-adjust: none;
+}
+
+video.html5-main-video {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    outline: 0;
+}
+
+.my-video-dimensions {
+    width: 100%;
+    height: 100%;
+}
+
+#info-contents {
+    display:flex;
+    border-bottom: 1px solid hsl(0, 0%, 93.3%);
+}
+
+#container.video-info, #container-buttons.video-buttons {
+    display: block;
+    padding: 20px 0 8px 0;
+}
+
+#container-buttons.video-buttons {
+    position: absolute;
+    right: 2%;
+}
+
+.title.video-info {
+    display: block;
+    max-height: 4.8rem;
+    overflow: hidden;
+    font-weight: 400;
+    line-height: 2.4rem;
+    color: rgb(17, 17, 17);
+    font-size: 24px;
+    transform: none;
+    text-shadow: none;
+}
+
+#video-secondary-info-renderer {
+    display: block;
+    border-bottom: 1px solid hsl(0, 0%, 93.3%);
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+}
+
+#top-row {
+    margin-bottom: 12px;
+    padding-top: 16px;
+    display: flex;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+
+a.video-owner {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    color: rgb(10, 10, 10);
+}
+
+#avatar.video-owner {
+    margin-right: 16px;
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+}
+
+#avatar img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: none;
+    max-width: 100%;
+}
+
+#upload-info.video-owner {
+    -ms-flex: 1 1 0.000000001px;
+    flex: 1;
+    flex-basis: 0.000000001px;
+    display: flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+#video-owner {
+    flex: 1;
+    flex-basis: 0.000000001px;
+    display: flex;
+}
+
+.date.video-secondary-info {
+    color: rgba(17, 17, 17, 0.6);
+    font-size: 1.3rem;
+    font-weight: 400;
+    line-height: 1.8rem;
+    text-transform: none;
+}
+
+#owner-name {
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.6rem;
+}
+
+#owner-name a {
+    color: rgb(10, 10, 10);
+}
+
+.video-detail-info strong {
+    color: #000;
+    line-height: 1.yrem;
+    font-size: 1.4rem;
+}
+
+.video-detail-info span {
+    color: #2A3F54;
+    font-size:24px;
+}
+
+/* Watch Page CSS ENDS */
+
+/* EDIT PAGE CSS */
+
+.edit-video-content .mb-3 {
+    margin-bottom: 10px;
+}
+
+/* EDIT Page CSS ENDS */
+
+
+a.show-more {
+    margin:0 ;
+    padding: 0;
+    margin-right: auto;
+    margin-bottom: 24px;
+    font-size: 1.3rem;
+    font-weight: 500;
+    letter-spacing: .007px;
+    text-transform: uppercase;
+    text-align: center;
+    font-family: inherit;
+}
+
+a.show-more:hover {
+    cursor: pointer;
+}
