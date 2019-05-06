@@ -15,7 +15,7 @@ namespace Cet.PrinciplesOfDistanceEducation.Controllers
         }
 
         [HttpGet("/root/addrole")]
-        // [Authorize(Roles = "Superuser,Administrator")]
+        [Authorize(Roles = "Superuser,Administrator")]
         public IActionResult AddRole(string role, string key)
         {
             if (key == "c3VwZXJ1c2Vy")
@@ -25,7 +25,7 @@ namespace Cet.PrinciplesOfDistanceEducation.Controllers
         }
 
         [HttpGet("/root/addroletouser")]
-        // [Authorize(Roles = "Superuser,Administrator")]
+        [Authorize(Roles = "Superuser,Administrator")]
         public IActionResult AddRoleToUser(string userName, string role, string key)
         {
             if (key == "c3VwZXJ1c2Vy")
