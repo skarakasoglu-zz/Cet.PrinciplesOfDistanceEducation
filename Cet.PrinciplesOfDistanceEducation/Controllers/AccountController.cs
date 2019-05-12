@@ -14,26 +14,6 @@ namespace Cet.PrinciplesOfDistanceEducation.Controllers
             _cetUserService = cetUserService;
         }
 
-        [HttpGet("/root/addrole")]
-        [Authorize(Roles = "Superuser,Administrator")]
-        public IActionResult AddRole(string role, string key)
-        {
-            if (key == "c3VwZXJ1c2Vy")
-                return Json(_cetUserService.CreateRole(role).Result);
-            else
-                return Json("Permission denied.");
-        }
-
-        [HttpGet("/root/addroletouser")]
-        [Authorize(Roles = "Superuser,Administrator")]
-        public IActionResult AddRoleToUser(string userName, string role, string key)
-        {
-            if (key == "c3VwZXJ1c2Vy")
-                return Json(_cetUserService.AssignRoleToUser(userName, role).Result);
-            else
-                return Json("Permission denied.");
-        }
-
         [Route("/signup")]
         public IActionResult Signup()
         {
